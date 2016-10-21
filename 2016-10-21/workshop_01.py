@@ -53,7 +53,7 @@ def fun(xPil,yPil,xBeam,zBeam,ldy,lhz):
 	struct=STRUCT([pillarS,beamS])
 	return struct
 
-l=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1]
+"""l=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1]
 l2=[0.1,0.2,0.1,0.3]
 struttura=fun(0.01,0.02,0.01,0.02,l2,l2)
-VIEW(struttura)
+VIEW(struttura)"""
