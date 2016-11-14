@@ -1,0 +1,4 @@
+L'immagine di riferimento del mio tetto l'ho allegata nel file di python, ho pensato ad un algoritmo che sfruttasse la BFS per riconoscere quali vertici unire tra loro, per formare ogni singola facciata. Come si può vedere inizialmente creo l'immagine HPC del tetto e mi faccio restituire i suoi componenti: lo scheletro e la mesh. Poi li assemblo insieme con una STRUCT.
+Lo scheletro lo costruisco con il metodo SKEL1 e lo arrobustisco con OFFSET; la mesh invece viene calcolata in base ad un algoritmo che sfrutta la BFS, in quanto ho trattato ogni vertice come un nodo di un grafo.
+
+NB L'algoritmo che ho sviluppato funziona per tetti (convessi e non) che hanno solo uno strato superiore di altezza, per tetti con più strati ci penserò in futuro a svilupparlo.
