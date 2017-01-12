@@ -3,7 +3,7 @@ import csv
 import math
 
 ANGOLO = PI/3
-COSTANTE_DI_TAGLIO = 0.8
+COSTANTE_DI_TAGLIO = 0.6
 TERRACE_TEXTURE = ["terrace_texture.jpg",True,False,1,1,0,10,10]
 
 def tetto_terrazzo(angolo,perimetro):
@@ -307,7 +307,16 @@ tetto1 = tetto_terrazzo(ANGOLO,perimetro1)
 perimetro2 = MKPOL([[[0,0,0],[2,0,0],[4,4,0],[3,6,0],[0,4,0],[6,6,0],[6,4,0]],[[1,2,3,4,5],[3,4,6,7]],1])
 tetto2 = tetto_terrazzo(ANGOLO,perimetro2)
 
-perimetro3 = MKPOL([[[2,0,0],[4,2,0],[4,7,0],[0,5,0],[0,2,0],[6,0,0],[8,2,0],[8,5,0]],[[1,2,3,4,5],[2,3,6,7,8]],1])
+perimetro3 = MKPOL([[[2,0,0],[4,2,0],[4,8.5,0],[0,5,0],[0,2,0],[6,0,0],[8,2,0],[8,5,0]],[[1,2,3,4,5],[2,3,6,7,8]],1])
 tetto3 = tetto_terrazzo(ANGOLO,perimetro3)
+
+retta1 = [[1,2,0],[5,2,0]]
+retta2 = [[1,1,0],[4,2,0]]
+r1 = MKPOL([retta1,[[1,2]],1])
+r2 = MKPOL([retta2,[[1,2]],1])
+i = intersezione(retta1,retta2)
+inter = MKPOL([[i,[i[0],i[1]+1,0]],[[1,2]],1])
+n = STRUCT([r1,r2,inter])
+
 
 VIEW(tetto2)
