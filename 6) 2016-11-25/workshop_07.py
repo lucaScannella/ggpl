@@ -8,8 +8,10 @@ DOOR_DARK_WOOD = Color4f([170/255.,144/255.,125/255.,1.0])
 DOOR_WOOD = Color4f([230/255.,207/255.,168/255.,1.0])
 DIRTY_YELLOW = Color4f([200/255.,188/255.,87/255.,1.0])
 LIGHT_YELLOW = Color4f([250/255.,250/255.,176/255.,1.0])
-
-
+GLASS_TEXTURE = ["window_texture.jpg",True,False,1,1,0,1,1]
+LIGHT_WOOD_TEXTURE = ["light_wood_texture.jpg",True,False,1,1,0,1,1]
+DARK_WOOD_TEXTURE = ["dark_wood_texture.jpg",True,False,1,1,PI/2,0.25,1]
+WOOD_WINDOW_TEXTURE = ["wood_window_texture.jpg",True,False,1,1,PI/2,0.25,1]
 
 
 def getPoints(posVertice,distanze):
@@ -32,13 +34,13 @@ def makeObject(distX,distY,distZ,occupancy):
                 if occupancy[x][y][z] != 0:
                     cell = MKPOL([getVerts(x,y,z,distX,distY,distZ),[[1,2,3,4,5,6,7,8]],1])
                     if occupancy[x][y][z] == 1:
-                        cell = COLOR(WINDOW_WOOD)(cell)
+                        cell = TEXTURE(WOOD_WINDOW_TEXTURE)(cell)
                     elif occupancy[x][y][z] == 2:
-                        cell = COLOR(GLASS)(cell)
+                        cell = TEXTURE(GLASS_TEXTURE)(cell)
                     elif occupancy[x][y][z] == 3:
-                        cell = COLOR(DOOR_DARK_WOOD)(cell)
+                        cell = TEXTURE(DARK_WOOD_TEXTURE)(cell)
                     elif occupancy[x][y][z] == 4:
-                        cell = COLOR(DOOR_WOOD)(cell)
+                        cell = TEXTURE(LIGHT_WOOD_TEXTURE)(cell)
                     window = STRUCT([window,cell])
     return window
     
