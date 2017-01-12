@@ -310,13 +310,4 @@ tetto2 = tetto_terrazzo(ANGOLO,perimetro2)
 perimetro3 = MKPOL([[[2,0,0],[4,2,0],[4,8.5,0],[0,5,0],[0,2,0],[6,0,0],[8,2,0],[8,5,0]],[[1,2,3,4,5],[2,3,6,7,8]],1])
 tetto3 = tetto_terrazzo(ANGOLO,perimetro3)
 
-retta1 = [[1,2,0],[5,2,0]]
-retta2 = [[1,1,0],[4,2,0]]
-r1 = MKPOL([retta1,[[1,2]],1])
-r2 = MKPOL([retta2,[[1,2]],1])
-i = intersezione(retta1,retta2)
-inter = MKPOL([[i,[i[0],i[1]+1,0]],[[1,2]],1])
-n = STRUCT([r1,r2,inter])
-
-
 VIEW(tetto2)
