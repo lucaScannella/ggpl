@@ -298,6 +298,6 @@ def makeWindowDoor():
     return STRUCT([porta,T(1)(sum(portaX)+1)(finestra)])
 
 
-VIEW(makeWindowDoor())
+#VIEW(makeWindowDoor())
 
     

@@ -30,20 +30,43 @@ def door_maker(file_name):
             x2 = l[2]
             y1 = l[1]
             y2 = l[3]
-            portaZ = [2]
+            portaZ = [4]
             if y2-y1 == 0:
-                portaX = [x1,x2-x1]
-                portaY = [y1,0.4]
+                portaX = [x1,x2-x1+0.4]
+                portaY = [y1,0.2]
                 occPorta = fillPorta(len(portaX),len(portaY),len(portaZ))
             else:
-                portaX = [x1,0.4]
-                portaY = [y1,y2-y1]
+                portaX = [x1-0.08,0.33]
+                portaY = [y1,y2-y1+0.4]
                 occPorta = fillPorta(len(portaX),len(portaY),len(portaZ))
             porta = makeObject(portaX,portaY,portaZ,occPorta)
             porte = STRUCT([porte,porta])
             
     return porte
-    
+
+def window_maker(file_name):
+    windows = QUOTE([0])
+    with open(file_name,'r') as csvFile:
+        rows = csv.reader(csvFile, delimiter=' ', quotechar='|')
+        for row in rows:
+            l = turnStringOnList(row[0])
+            x1 = l[0]
+            x2 = l[2]
+            y1 = l[1]
+            y2 = l[3]
+            windowZ = [2.5]
+            if y2-y1 == 0:
+                windowX = [x1-0.2,x2-x1+0.6]
+                windowY = [y1+0.1,0.2]
+                occWindow = fillWindow(len(windowX),len(windowY),len(windowZ))
+            else:
+                windowX = [x1+0.1,0.2]
+                windowY = [y1,y2-y1+0.4]
+                occWindow = fillWindow(len(windowX),len(windowY),len(windowZ))
+            window = makeObject(windowX,windowY,windowZ,occWindow)
+            windows = STRUCT([window,windows])
+            
+    return windows
     
 def fillPorta(x,y,z):
     occPorta = [[[0 for k in xrange(z)] for j in xrange(y)] for i in xrange(x)]
@@ -55,6 +78,16 @@ def fillPorta(x,y,z):
 
     return occPorta
     
+def fillWindow(x,y,z):
+    occWindow = [[[0 for k in xrange(z)] for j in xrange(y)] for i in xrange(x)]
+    
+    occWindow[0][0][0] = 0
+    occWindow[1][1][0] = 2
+    occWindow[0][1][0] = 0
+    occWindow[1][0][0] = 0
+
+    return occWindow
+
 def ggpl_planimetria():
     muri_esterni = planimetrier("muri_esterni.lines")
     muri_esterni = OFFSET([0.4,0.4,5])(muri_esterni)
@@ -82,7 +115,8 @@ def ggpl_planimetria():
     
     house = STRUCT([pareti_porte,pareti_finestre_porta])
     
-    doors = door_maker("finestre.lines")
-    return doors
+    doors = door_maker("porte.lines")
+    windows = window_maker("finestre.lines")
+    return STRUCT([house,doors,T(3)(1.25)(windows)])
 
 VIEW(ggpl_planimetria())
