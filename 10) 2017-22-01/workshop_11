@@ -1,0 +1,134 @@
+from pyplasm import*
+from workshop_10 import*
+import csv
+
+ROAD_TEXTURE = ["road.jpg",True,True,1,1,0,80,80]
+GRASS_TEXTURE = ["grass.png",True,True,1,1,0,60,60]
+SKY_TEXTURE = ["sky1.jpg",True,True,1,1,0,1,2]
+PATHWAY_TEXTURE = ["pathway2.jpg",True,True,1,1,0,4,1]
+WATER_TEXTURE = ["water2.png",True,True,1,1,0,3,5]
+BOARD_TEXTURE = ["pool_board.JPG",True,True,1,1,0,15,12]
+TRAMP_COLOR = Color4f([255/255.,228/255.,196/255.,1.0])
+BARK_TEXTURE = ["bark.jpg",True,True,1,1,0,10,2]
+LEAFS_TEXTURE = ["leafs.jpg",True,True,1,1,0,1,1]
+
+def ggpl_quartiere():
+	'''sky_box = T([1,2])([200,200])(SPHERE(400)([20,20]))
+	sky_box = TEXTURE(SKY_TEXTURE)(sky_box)'''
+	grass_ground = CUBOID([600,600])
+	grass_ground = TEXTURE(GRASS_TEXTURE)(grass_ground)
+
+
+	vie = make_ways("quartiere.lines")
+	vie = OFFSET([10,10])(vie)
+	vie = TEXTURE(ROAD_TEXTURE)(vie)
+
+	houses1 = build_houses(8)
+	houses2 = R([2,1])(PI/150)(T([1,2])([270,385])(R([1,2])(PI)(houses1)))
+
+	poor_houses = STRUCT([houses1,houses2])
+
+	rich_houses = build_rich_houses(5)
+	rich_houses = R([1,2])(PI*0.656)(rich_houses)
+	rich_houses = T([1,2])([260,155])(rich_houses)
+
+	houses = STRUCT([poor_houses,rich_houses])
+
+	t = make_tree()
+	tree = T([1,2])([180,40])(t)
+	tree2 = T([1,2])([190,55])(t)
+	tree3 = T([1,2])([200,55])(t)
+	tree4 = T([1,2])([210,58])(t)
+	tree = STRUCT([tree,tree2,tree3,tree4])
+
+	ground = STRUCT([T([1,2])([-100,-170])(vie),grass_ground])
+
+	return STRUCT([houses,ground,tree])
+
+
+def make_tree():
+	chioma = SPHERE(3)([20,20])
+	chioma = TEXTURE(LEAFS_TEXTURE)(chioma)
+	chioma = T(3)(12)(chioma)
+
+	tronco = CIRCLE(0.5)([10,10])
+	tronco = PROD([tronco,Q(12)])
+	tronco = TEXTURE(BARK_TEXTURE)(tronco)
+
+	tree = STRUCT([tronco,chioma])
+
+	return tree
+
+
+def build_rich_houses(n):
+	viottolo = T([1,2])([4.3,20])(CUBOID([2.8,15]))
+	viottolo = TEXTURE(PATHWAY_TEXTURE)(viottolo)
+	house = rich_house()
+	house = STRUCT([house,viottolo])
+
+	c1 = CUBOID([16,12])
+	c2 = CUBOID([14,10])
+	c2 = T([1,2])([1,1])(c2)
+
+	trampolino = T([1,2,3])([0.5,3.5,0.5])(CUBOID([4,1.5,0.1]))
+	trampolino = COLOR(TRAMP_COLOR)(trampolino)
+
+	pool_base = XOR([c1,c2])
+	c2 = TEXTURE(WATER_TEXTURE)(c2)
+	pool_base = PROD([pool_base,Q(0.5)])
+	pool_base = TEXTURE(BOARD_TEXTURE)(pool_base)
+	pool_base = STRUCT([pool_base,c2])
+	pool_base = STRUCT([pool_base,trampolino])
+	pool_base = T([1,2])([4,-15])(pool_base)
+
+	house = STRUCT([pool_base,house])
+
+
+	pair_x = [T(1)(45), house]
+	filaCase = STRUCT(NN(n)(pair_x))
+	filaCase = T(1)(-50)(filaCase)
+
+
+	#return pool_base
+	return filaCase
+
+def build_houses(n):
+	viottolo = T([1,2])([-7,-35])(CUBOID([2.8,15]))
+	viottolo = TEXTURE(PATHWAY_TEXTURE)(viottolo)
+	casa = R([1,2])(PI)(ggpl_house())
+	casa = STRUCT([casa,viottolo])
+	pair_x = [T(1)(30), casa]
+	filaCase = STRUCT(NN(n)(pair_x))
+
+	filaCase = R([2,1])(PI/3)(filaCase)
+	filaCase = T([1,2])([65,300])(filaCase)
+
+	return filaCase
+
+def make_ways(file_name):
+    ways = None
+    with open(file_name,'r') as csvFile:
+        rows = csv.reader(csvFile, delimiter=' ', quotechar='|')
+        for row in rows:
+        	linea = []
+        	l = turnStringOnList(row[0])
+        	p1 = [l[0],l[1]]
+        	p2 = [l[2],l[3]]
+        	linea.append(p1)
+        	linea.append(p2)
+        	linea = MAP(BEZIER(S1)(linea))(INTERVALS(1)(5))
+        	if ways == None:
+        		ways = linea
+        	else:
+        		ways = STRUCT([ways,linea])
+    return ways
+
+def turnStringOnList(stringa):
+    lista = stringa.split(",")
+    listaAppoggio = []
+    for el in lista:
+        listaAppoggio.append(float(el))
+    return listaAppoggio
+
+#VIEW(make_tree())
+VIEW(ggpl_quartiere())

@@ -3,13 +3,16 @@ from workshop_07 import makeObject
 import csv
 
 def planimetrier(file_name):
-    planimetry = QUOTE([0])
+    planimetry = None
     with open(file_name,'r') as csvFile:
         rows = csv.reader(csvFile, delimiter=' ', quotechar='|')
         for row in rows:
             l = turnStringOnList(row[0])
             linea = MKPOL([[[l[0],l[1],0],[l[2],l[3],0]],[[1,2]],1])
-            planimetry = STRUCT([planimetry,linea])
+            if planimetry == None:
+                planimetry = linea
+            else:
+                planimetry = STRUCT([planimetry,linea])
             
     return planimetry
     
@@ -21,7 +24,7 @@ def turnStringOnList(stringa):
     return listaAppoggio
     
 def door_maker(file_name):
-    porte = QUOTE([0])
+    porte = None
     with open(file_name,'r') as csvFile:
         rows = csv.reader(csvFile, delimiter=' ', quotechar='|')
         for row in rows:
@@ -40,12 +43,15 @@ def door_maker(file_name):
                 portaY = [y1,y2-y1+0.4]
                 occPorta = fillPorta(len(portaX),len(portaY),len(portaZ))
             porta = makeObject(portaX,portaY,portaZ,occPorta)
-            porte = STRUCT([porte,porta])
+            if porte == None:
+                porte = porta
+            else:
+                porte = STRUCT([porte,porta])
             
     return porte
 
 def window_maker(file_name):
-    windows = QUOTE([0])
+    windows = None
     with open(file_name,'r') as csvFile:
         rows = csv.reader(csvFile, delimiter=' ', quotechar='|')
         for row in rows:
@@ -64,7 +70,10 @@ def window_maker(file_name):
                 windowY = [y1,y2-y1+0.4]
                 occWindow = fillWindow(len(windowX),len(windowY),len(windowZ))
             window = makeObject(windowX,windowY,windowZ,occWindow)
-            windows = STRUCT([window,windows])
+            if windows == None:
+                windows = window
+            else:
+                windows = STRUCT([window,windows])
             
     return windows
     
@@ -91,11 +100,11 @@ def fillWindow(x,y,z):
 def ggpl_planimetria():
     muri_esterni = planimetrier("muri_esterni.lines")
     muri_esterni = OFFSET([0.4,0.4,5])(muri_esterni)
-    muri_esterni = DIFFERENCE([muri_esterni,CUBOID([0.4,0.4,5])])
+    #muri_esterni = DIFFERENCE([muri_esterni,CUBOID([0.4,0.4,5])])
 
     muri_interni = planimetrier("muri_interni.lines")
     muri_interni = OFFSET([0.2,0.2,5])(muri_interni)
-    muri_interni = DIFFERENCE([muri_interni,CUBOID([0.4,0.4,5])])
+    #muri_interni = DIFFERENCE([muri_interni,CUBOID([0.4,0.4,5])])
     
     finestre = planimetrier("finestre.lines")
     finestre = OFFSET([0.405,0.4,2.5])(finestre)
@@ -119,4 +128,4 @@ def ggpl_planimetria():
     windows = window_maker("finestre.lines")
     return STRUCT([house,doors,T(3)(1.25)(windows)])
 
-VIEW(ggpl_planimetria())
+#VIEW(ggpl_planimetria())

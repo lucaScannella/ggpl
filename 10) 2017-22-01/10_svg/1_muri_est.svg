@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4818"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="512.5"
+   height="600"
+   viewBox="0 0 512.5 600"
+   sodipodi:docname="first_floor.jpg.svg">
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="muri_est"
+     style="display:inline">
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 171.4375,83.750001 -152.257229,0 0,317.199439 130.196039,0 0,127.80955 169.70562,0 0,-515.127287 -147.60854,0 z"
+       id="path4134"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
